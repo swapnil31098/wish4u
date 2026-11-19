@@ -54,11 +54,17 @@
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
   }
 
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
   .badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    align-self: flex-start;
     padding: 6px 12px;
     border-radius: 999px;
     background: rgba(255, 94, 98, 0.14);
@@ -68,6 +74,18 @@
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+  }
+
+  .sound-toggle {
+    border: 1px solid var(--card-border);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    border-radius: 999px;
+    padding: 6px 11px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
   }
 
   .dot {
@@ -236,7 +254,10 @@
 </head>
 <body>
   <div class="phone-shell">
-    <div class="badge"><span class="dot"></span> Official Birthday Audit</div>
+    <div class="top-bar">
+      <div class="badge"><span class="dot"></span> Official Birthday Audit</div>
+      <button type="button" id="sound-btn" class="sound-toggle">Sound: ON</button>
+    </div>
 
     <section id="step-1" class="step active">
       <div class="hero-card">
@@ -276,6 +297,45 @@
       from: "Swapnil"
     };
 
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    function playCelebrationSound() {
+      if (!soundEnabled) return;
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        if (!audioCtx) {
+          audioCtx = new AudioContextClass();
+        }
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+
+        const notes = [523.25, 659.25, 783.99, 1046.5];
+        const now = audioCtx.currentTime;
+
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+          gain.gain.setValueAtTime(0.001, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.14, now + idx * 0.08 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 0.35);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.36);
+        });
+      } catch (e) {
+        // Ignore audio errors on restricted devices
+      }
+    }
+
     function applyConfig() {
       const params = new URLSearchParams(window.location.search);
       const data = {
@@ -302,10 +362,12 @@
       const s2 = document.getElementById("step-2");
       if (s1) s1.classList.remove("active");
       if (s2) s2.classList.add("active");
+      playCelebrationSound();
       burstConfetti();
     }
 
     function burstConfetti() {
+      playCelebrationSound();
       const colors = ["#ff5e62", "#ff9966", "#38d9a9", "#ffd43b", "#748ffc"];
       for (let i = 0; i < 36; i++) {
         const piece = document.createElement("div");
@@ -319,15 +381,31 @@
       }
     }
 
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById("sound-btn");
+      if (btn) {
+        btn.textContent = soundEnabled ? "Sound: ON" : "Sound: OFF";
+      }
+      if (soundEnabled) {
+        playCelebrationSound();
+      }
+    }
+
     function bindEvents() {
       applyConfig();
       const verdictBtn = document.getElementById("verdict-btn");
       const confettiBtn = document.getElementById("confetti-btn");
+      const soundBtn = document.getElementById("sound-btn");
+
       if (verdictBtn) {
         verdictBtn.addEventListener("click", revealWish);
       }
       if (confettiBtn) {
         confettiBtn.addEventListener("click", burstConfetti);
+      }
+      if (soundBtn) {
+        soundBtn.addEventListener("click", toggleSound);
       }
     }
 
