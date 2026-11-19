@@ -122,7 +122,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 16px;
+    gap: 18px;
     margin: auto 0;
     padding: 10px 0;
     animation: sceneEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -138,23 +138,11 @@
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
-  .cue-text {
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-    animation: gentlePulse 2s infinite ease-in-out;
-  }
-
-  @keyframes gentlePulse {
-    0%, 100% { opacity: 0.7; transform: translateY(0); }
-    50% { opacity: 1; transform: translateY(-2px); }
-  }
-
-  /* Scene 1: Tactile Balloon / Sky Lantern */
+  /* Scene 1: Tactile Balloon / Sky Lantern with Visual Ripple Affordance */
   .magic-object-stage {
     position: relative;
-    width: 210px;
-    height: 240px;
+    width: 220px;
+    height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -164,12 +152,31 @@
 
   .halo-ring {
     position: absolute;
-    width: 150px;
-    height: 150px;
+    width: 156px;
+    height: 156px;
     border-radius: 50%;
-    border: 2px dashed rgba(255, 209, 102, 0.45);
+    border: 2px dashed rgba(255, 209, 102, 0.5);
     animation: spinSlow 12s linear infinite;
     pointer-events: none;
+  }
+
+  .tap-ripple {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 94, 126, 0.55);
+    animation: rippleOut 2.2s ease-out infinite;
+    pointer-events: none;
+  }
+
+  body.theme-lantern .tap-ripple {
+    border-color: rgba(255, 183, 77, 0.55);
+  }
+
+  @keyframes rippleOut {
+    0% { transform: scale(0.88); opacity: 0.85; }
+    100% { transform: scale(1.42); opacity: 0; }
   }
 
   @keyframes spinSlow {
@@ -177,13 +184,13 @@
   }
 
   .balloon-body {
-    width: 124px;
-    height: 148px;
+    width: 128px;
+    height: 152px;
     border-radius: 50% 50% 46% 46% / 55% 55% 42% 42%;
     background:
       radial-gradient(circle at 32% 26%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 22%, transparent 45%),
       linear-gradient(155deg, var(--accent), #b5175c 78%);
-    box-shadow: 0 18px 40px rgba(255, 94, 126, 0.42), inset -10px -14px 24px rgba(0,0,0,0.28);
+    box-shadow: 0 18px 40px rgba(255, 94, 126, 0.45), inset -10px -14px 24px rgba(0,0,0,0.28);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,12 +202,12 @@
   }
 
   .lantern-body {
-    width: 118px;
-    height: 138px;
+    width: 122px;
+    height: 142px;
     border-radius: 28px 28px 14px 14px;
     background:
       radial-gradient(circle at 50% 42%, #fff8d6 0%, #ffb74d 55%, #e65100 100%);
-    box-shadow: 0 0 38px rgba(255, 183, 77, 0.55), inset 0 -10px 18px rgba(120, 30, 0, 0.35);
+    box-shadow: 0 0 38px rgba(255, 183, 77, 0.58), inset 0 -10px 18px rgba(120, 30, 0, 0.35);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -256,14 +263,14 @@
   }
 
   .object-name {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 800;
     color: #fff;
     text-shadow: 0 2px 8px rgba(0,0,0,0.35);
     line-height: 1.2;
   }
 
-  /* Scene 2: Wax-Sealed Postcard / Envelope */
+  /* Scene 2: Wax-Sealed Postcard */
   .postcard-stage {
     width: 100%;
     display: flex;
@@ -277,11 +284,21 @@
     background: var(--paper);
     color: var(--ink);
     border-radius: 22px;
-    padding: 22px 20px;
+    padding: 24px 20px;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
     position: relative;
     border: 2px solid rgba(255, 209, 102, 0.65);
     text-align: left;
+    transition: transform 0.2s ease;
+  }
+
+  .postcard.interactive-card {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .postcard.interactive-card:active {
+    transform: scale(0.985);
   }
 
   .postcard-header {
@@ -295,7 +312,7 @@
     color: #8c4a62;
     border-bottom: 1px dashed rgba(140, 74, 98, 0.28);
     padding-bottom: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 
   .postcard-sealed-overlay {
@@ -303,18 +320,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 18px 8px 10px;
-    gap: 12px;
-    text-align: center;
+    padding: 22px 8px 18px;
   }
 
   .wax-seal {
-    width: 84px;
-    height: 84px;
+    width: 92px;
+    height: 92px;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #ff6b81 0%, #c9184a 65%, #800f2f 100%);
-    box-shadow: 0 10px 24px rgba(128, 15, 47, 0.45), inset 0 2px 6px rgba(255,255,255,0.4);
-    border: 3px solid rgba(255, 215, 115, 0.75);
+    box-shadow: 0 10px 26px rgba(128, 15, 47, 0.45), inset 0 2px 6px rgba(255,255,255,0.4);
+    border: 3px solid rgba(255, 215, 115, 0.8);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -322,20 +337,20 @@
     color: #fff3b0;
     font-weight: 800;
     font-size: 11px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     cursor: pointer;
     touch-action: manipulation;
-    animation: sealPulse 2.1s infinite ease-in-out;
+    animation: sealPulse 2s infinite ease-in-out;
   }
 
   .wax-seal span.seal-emblem {
-    font-size: 24px;
-    line-height: 1.1;
+    font-size: 26px;
+    line-height: 1.15;
   }
 
   @keyframes sealPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.06); }
+    0%, 100% { transform: scale(1); box-shadow: 0 10px 26px rgba(128, 15, 47, 0.45); }
+    50% { transform: scale(1.07); box-shadow: 0 14px 32px rgba(201, 24, 74, 0.65); }
   }
 
   .wax-seal.cracked {
@@ -347,7 +362,7 @@
   .postcard-message {
     display: none;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     animation: fadeUp 0.4s ease;
   }
 
@@ -356,11 +371,28 @@
   }
 
   .wish-quote {
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 16.5px;
+    line-height: 1.62;
     font-weight: 500;
     color: #22182b;
     margin: 0;
+  }
+
+  .postcard-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+  }
+
+  .next-spark-badge {
+    font-size: 18px;
+    animation: gentleBob 1.6s infinite ease-in-out;
+  }
+
+  @keyframes gentleBob {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
   }
 
   .wish-from {
@@ -370,20 +402,20 @@
     text-align: right;
   }
 
-  /* Scene 3: Interactive Candle / Sparkler Finale */
+  /* Scene 3: Interactive Candle Finale */
   .cake-stage {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 18px;
     width: 100%;
   }
 
   .candle-interactive {
     position: relative;
-    width: 150px;
-    height: 150px;
-    border-radius: 28px;
+    width: 160px;
+    height: 160px;
+    border-radius: 30px;
     background: var(--surface-2);
     border: 1px solid var(--border);
     display: flex;
@@ -392,15 +424,20 @@
     justify-content: center;
     cursor: pointer;
     touch-action: manipulation;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45);
+    transition: transform 0.16s ease;
+  }
+
+  .candle-interactive:active {
+    transform: scale(0.95);
   }
 
   .flame {
-    width: 20px;
-    height: 32px;
+    width: 22px;
+    height: 34px;
     border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
     background: radial-gradient(circle at 50% 70%, #ff5722 0%, #ffc107 55%, #fff9c4 100%);
-    box-shadow: 0 0 22px #ffab00, 0 0 40px rgba(255, 171, 0, 0.6);
+    box-shadow: 0 0 24px #ffab00, 0 0 44px rgba(255, 171, 0, 0.65);
     animation: flicker 0.22s infinite alternate;
     margin-bottom: 2px;
   }
@@ -418,7 +455,7 @@
 
   .candle-stick {
     width: 14px;
-    height: 36px;
+    height: 38px;
     border-radius: 5px;
     background: repeating-linear-gradient(
       45deg,
@@ -430,8 +467,8 @@
   }
 
   .cake-base {
-    width: 106px;
-    height: 34px;
+    width: 110px;
+    height: 36px;
     border-radius: 12px 12px 16px 16px;
     background: linear-gradient(180deg, #ff85a1 0%, #d90429 100%);
     margin-top: -2px;
@@ -441,29 +478,22 @@
     width: 100%;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 16px 18px;
+    border-radius: 22px;
+    padding: 18px 20px;
   }
 
   .finale-title {
     margin: 0 0 6px;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
     color: var(--accent-2);
   }
 
   .finale-sub {
     margin: 0;
-    font-size: 14px;
+    font-size: 14.5px;
     color: var(--muted);
     line-height: 1.5;
-  }
-
-  .footer-bar {
-    text-align: center;
-    font-size: 11.5px;
-    color: var(--muted);
-    z-index: 5;
   }
 
   /* Bottom Switcher Bar (Preview Tooling Only) */
@@ -549,7 +579,8 @@
 
       <!-- SCENE 1: Tactile Floating Balloon / Sky Lantern -->
       <section id="scene-1" class="scene active">
-        <div id="object-trigger" class="magic-object-stage" role="button" tabindex="0" aria-label="Tap surprise object">
+        <div id="object-trigger" class="magic-object-stage" role="button" tabindex="0" aria-label="Birthday surprise">
+          <div class="tap-ripple"></div>
           <div class="halo-ring"></div>
           <div id="floating-object" class="balloon-body">
             <div id="obj-tag" class="object-tag">LEVEL 25</div>
@@ -558,65 +589,61 @@
             <div id="obj-string" class="balloon-string"></div>
           </div>
         </div>
-        <div id="scene1-cue" class="cue-text">🎈 Tap the floating balloon to pop your surprise</div>
       </section>
 
       <!-- SCENE 2: Wax-Sealed Postcard -->
       <section id="scene-2" class="scene">
         <div class="postcard-stage">
-          <div class="postcard">
+          <div id="postcard-card" class="postcard">
             <div class="postcard-header">
               <span>POSTCARD • SPECIAL DELIVERY</span>
               <span id="card-badge">BIRTHDAY EDITION</span>
             </div>
 
             <div id="sealed-view" class="postcard-sealed-overlay">
-              <div id="wax-seal-btn" class="wax-seal" role="button" tabindex="0" aria-label="Break wax seal to read message">
+              <div id="wax-seal-btn" class="wax-seal" role="button" tabindex="0" aria-label="Open postcard">
                 <span class="seal-emblem">💌</span>
                 <span>OPEN</span>
               </div>
-              <div id="seal-cue" class="cue-text" style="color:#5c2d42;">Tap the wax seal to unfold the loved-one note</div>
             </div>
 
             <div id="unsealed-view" class="postcard-message">
               <p id="wish-message" class="wish-quote">
                 Wishing you a year full of belly laughs, late-night talks, bold adventures, and every single dream coming true. Happy Birthday!
               </p>
-              <div id="wish-sender" class="wish-from">— With love, Swapnil</div>
+              <div class="postcard-footer-row">
+                <span class="next-spark-badge">🕯️ →</span>
+                <div id="wish-sender" class="wish-from">— With love, Swapnil</div>
+              </div>
             </div>
-          </div>
-
-          <div id="to-scene3-zone" class="cue-text" style="display:none; cursor:pointer;">
-            ✨ Tap the postcard to light your birthday wish candle →
           </div>
         </div>
       </section>
 
-      <!-- SCENE 3: Interactive Candle Blow & Sparkler Burst -->
+      <!-- SCENE 3: Interactive Candle Finale -->
       <section id="scene-3" class="scene">
         <div class="cake-stage">
-          <div id="candle-trigger" class="candle-interactive" role="button" tabindex="0" aria-label="Tap candle to make a wish">
+          <div id="candle-trigger" class="candle-interactive" role="button" tabindex="0" aria-label="Birthday candle">
             <div id="candle-flame" class="flame"></div>
             <div class="candle-stick"></div>
             <div class="cake-base"></div>
           </div>
-          <div id="candle-cue" class="cue-text">🕯️ Tap the glowing flame to make a wish & celebrate</div>
 
           <div class="finale-card">
             <h2 id="finale-heading" class="finale-title">Make a Wish ✨</h2>
-            <p id="finale-caption" class="finale-sub">Tap the candle flame above to blow it out and launch a fresh burst of celebration confetti.</p>
+            <p id="finale-caption" class="finale-sub">Here is to an unforgettable year ahead filled with happiness and magic.</p>
           </div>
         </div>
       </section>
 
-      <div class="footer-bar">Zero-Input Tactile Experience • Preview Mode</div>
+      <div></div>
     </div>
 
     <div class="switcher-bar">
       <span class="switcher-label">Preview Vibe:</span>
       <div class="switcher-group">
-        <button type="button" id="sw-balloon" class="sw-btn active">1. Balloon & Wax Seal</button>
-        <button type="button" id="sw-lantern" class="sw-btn">2. Sky Lantern & Postcard</button>
+        <button type="button" id="sw-balloon" class="sw-btn active">1. Balloon &amp; Wax Seal</button>
+        <button type="button" id="sw-lantern" class="sw-btn">2. Sky Lantern &amp; Postcard</button>
       </div>
     </div>
   </div>
@@ -627,35 +654,29 @@
         themeClass: "",
         tag: "LEVEL 25",
         name: "Rohan",
-        cue1: "🎈 Tap the floating balloon to pop your surprise",
         cardBadge: "BIRTHDAY EDITION",
-        sealCue: "Tap the wax seal to unfold the loved-one note",
         wish: "Wishing you a year full of belly laughs, late-night talks, bold adventures, and every single dream coming true. Happy Birthday!",
         from: "— With love, Swapnil",
-        candleCue: "🕯️ Tap the glowing flame to make a wish & celebrate",
         finaleTitle: "Make a Wish ✨",
-        finaleSub: "Tap the candle flame above to blow it out and launch a fresh burst of celebration confetti.",
+        finaleSub: "Here is to an unforgettable year ahead filled with happiness and magic.",
         isLantern: false
       },
       lantern: {
         themeClass: "theme-lantern",
         tag: "SPECIAL DAY",
         name: "Chhoti",
-        cue1: "🏮 Tap the glowing sky lantern to release your wish",
         cardBadge: "KEEPSAKE POSTCARD",
-        sealCue: "Tap the golden seal to read your message",
         wish: "May this new year bring you endless smiles, fearless energy, and moments you'll treasure forever. Happy Birthday!",
         from: "— Always cheering for you, Bhai",
-        candleCue: "✨ Tap the flame to blow out the wish & spark confetti",
         finaleTitle: "Cheers to Your New Year 🌟",
-        finaleSub: "Tap the candle anytime for another shower of celebration sparkles.",
+        finaleSub: "Wishing you joy, laughter, and magic in every single chapter ahead.",
         isLantern: true
       }
     };
 
-    let currentPreset = "balloon";
     let soundOn = true;
     let audioCtx = null;
+    let isUnsealed = false;
 
     function playSound(type) {
       if (!soundOn) return;
@@ -734,25 +755,25 @@
     }
 
     function resetExperience() {
+      isUnsealed = false;
       const obj = document.getElementById("floating-object");
       const seal = document.getElementById("wax-seal-btn");
       const sealedView = document.getElementById("sealed-view");
       const unsealedView = document.getElementById("unsealed-view");
-      const nextZone = document.getElementById("to-scene3-zone");
+      const postcard = document.getElementById("postcard-card");
       const flame = document.getElementById("candle-flame");
 
       if (obj) obj.classList.remove("popping");
       if (seal) seal.classList.remove("cracked");
       if (sealedView) sealedView.style.display = "flex";
       if (unsealedView) unsealedView.classList.remove("unsealed");
-      if (nextZone) nextZone.style.display = "none";
+      if (postcard) postcard.classList.remove("interactive-card");
       if (flame) flame.classList.remove("blown");
 
       setScene(1);
     }
 
     function applyPreset(key) {
-      currentPreset = key;
       const p = PRESETS[key] || PRESETS.balloon;
       document.body.className = p.themeClass || "";
 
@@ -767,12 +788,9 @@
 
       document.getElementById("obj-tag").textContent = p.tag;
       document.getElementById("obj-name").textContent = p.name;
-      document.getElementById("scene1-cue").textContent = p.cue1;
       document.getElementById("card-badge").textContent = p.cardBadge;
-      document.getElementById("seal-cue").textContent = p.sealCue;
       document.getElementById("wish-message").textContent = p.wish;
       document.getElementById("wish-sender").textContent = p.from;
-      document.getElementById("candle-cue").textContent = p.candleCue;
       document.getElementById("finale-heading").textContent = p.finaleTitle;
       document.getElementById("finale-caption").textContent = p.finaleSub;
 
@@ -797,20 +815,23 @@
       const seal = document.getElementById("wax-seal-btn");
       const sealedView = document.getElementById("sealed-view");
       const unsealedView = document.getElementById("unsealed-view");
-      const nextZone = document.getElementById("to-scene3-zone");
+      const postcard = document.getElementById("postcard-card");
 
       playSound("unseal");
       if (seal) seal.classList.add("cracked");
       setTimeout(() => {
         if (sealedView) sealedView.style.display = "none";
         if (unsealedView) unsealedView.classList.add("unsealed");
-        if (nextZone) nextZone.style.display = "block";
+        if (postcard) postcard.classList.add("interactive-card");
+        isUnsealed = true;
         launchConfetti(18);
       }, 260);
     });
 
-    document.getElementById("to-scene3-zone").addEventListener("click", () => {
-      setScene(3);
+    document.getElementById("postcard-card").addEventListener("click", () => {
+      if (isUnsealed) {
+        setScene(3);
+      }
     });
 
     document.getElementById("candle-trigger").addEventListener("click", () => {
