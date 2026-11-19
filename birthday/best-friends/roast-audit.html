@@ -13,7 +13,6 @@
     --muted: #9aa0b4;
     --accent: #ff5e62;
     --accent-2: #ff9966;
-    --green: #38d9a9;
     --radius: 22px;
   }
 
@@ -22,17 +21,22 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  body {
+  html, body {
     margin: 0;
+    padding: 0;
     min-height: 100dvh;
+    width: 100%;
     background: radial-gradient(circle at top, #1b1f33 0%, var(--bg) 65%);
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 16px;
-    overflow-x: hidden;
   }
 
   .phone-shell {
@@ -85,6 +89,8 @@
     gap: 18px;
     margin: auto 0;
     animation: fadeUp 0.35s ease;
+    position: relative;
+    z-index: 2;
   }
 
   .step.active {
@@ -163,6 +169,7 @@
   }
 
   .btn-primary {
+    display: block;
     width: 100%;
     border: none;
     border-radius: 16px;
@@ -174,6 +181,10 @@
     cursor: pointer;
     box-shadow: 0 10px 24px rgba(255, 94, 98, 0.3);
     transition: transform 0.15s ease;
+    touch-action: manipulation;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
   }
 
   .btn-primary:active {
@@ -181,6 +192,7 @@
   }
 
   .btn-secondary {
+    display: block;
     width: 100%;
     border: 1px solid var(--card-border);
     border-radius: 14px;
@@ -190,6 +202,10 @@
     color: var(--text);
     background: rgba(255, 255, 255, 0.04);
     cursor: pointer;
+    touch-action: manipulation;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
   }
 
   .footer-note {
@@ -222,17 +238,15 @@
   <div class="phone-shell">
     <div class="badge"><span class="dot"></span> Official Birthday Audit</div>
 
-    <!-- Step 1: Lean Hook -->
     <section id="step-1" class="step active">
       <div class="hero-card">
         <div id="age-badge" class="age-pill">LEVEL 25 UNLOCKED</div>
         <h1 id="headline-name">Rohan</h1>
         <p id="hook-sub" class="subtitle">We ran a quick background check before your birthday post goes live.</p>
       </div>
-      <button class="btn-primary" onclick="revealWish()">Tap to See the Verdict</button>
+      <button type="button" id="verdict-btn" class="btn-primary">Tap to See the Verdict</button>
     </section>
 
-    <!-- Step 2: Punchy Roast + Wish Payoff -->
     <section id="step-2" class="step">
       <div class="roast-list">
         <div id="roast-1" class="roast-item">1. "I'm 5 minutes away" — still hasn't put shoes on.</div>
@@ -245,26 +259,24 @@
         <div id="sender-line" class="from-line">— From Swapnil</div>
       </div>
 
-      <button class="btn-secondary" onclick="burstConfetti()">Celebrate Again</button>
+      <button type="button" id="confetti-btn" class="btn-secondary">Celebrate Again</button>
     </section>
 
     <div class="footer-note">Made for mobile • Instant wish experience</div>
   </div>
 
   <script>
-    // Edit these defaults or pass URL query params:
-    // ?name=Priya&age=26&r1=...&r2=...&r3=...&wish=...&from=...
     const WISH_CONFIG = {
       name: "Rohan",
       age: "25",
-      r1: '1. "I'm 5 minutes away" — still hasn't put shoes on.',
+      r1: "1. \"I'm 5 minutes away\" — still hasn't put shoes on.",
       r2: "2. Plans trips like a CEO, cancels like a ghost.",
       r3: "3. Somehow still the first call when things go sideways.",
       wish: "Happy birthday, legend. Wouldn't trade the chaos or the loyalty for anything.",
       from: "Swapnil"
     };
 
-    (function applyConfig() {
+    function applyConfig() {
       const params = new URLSearchParams(window.location.search);
       const data = {
         name: params.get("name") || WISH_CONFIG.name,
@@ -276,18 +288,20 @@
         from: params.get("from") || WISH_CONFIG.from
       };
 
-      document.getElementById("age-badge").textContent = `LEVEL ${data.age} UNLOCKED`;
+      document.getElementById("age-badge").textContent = "LEVEL " + data.age + " UNLOCKED";
       document.getElementById("headline-name").textContent = data.name;
       document.getElementById("roast-1").textContent = data.r1;
       document.getElementById("roast-2").textContent = data.r2;
       document.getElementById("roast-3").textContent = data.r3;
       document.getElementById("tribute-text").textContent = data.wish;
-      document.getElementById("sender-line").textContent = `— From ${data.from}`;
-    })();
+      document.getElementById("sender-line").textContent = "— From " + data.from;
+    }
 
     function revealWish() {
-      document.getElementById("step-1").classList.remove("active");
-      document.getElementById("step-2").classList.add("active");
+      const s1 = document.getElementById("step-1");
+      const s2 = document.getElementById("step-2");
+      if (s1) s1.classList.remove("active");
+      if (s2) s2.classList.add("active");
       burstConfetti();
     }
 
@@ -303,6 +317,24 @@
         document.body.appendChild(piece);
         setTimeout(() => piece.remove(), 3200);
       }
+    }
+
+    function bindEvents() {
+      applyConfig();
+      const verdictBtn = document.getElementById("verdict-btn");
+      const confettiBtn = document.getElementById("confetti-btn");
+      if (verdictBtn) {
+        verdictBtn.addEventListener("click", revealWish);
+      }
+      if (confettiBtn) {
+        confettiBtn.addEventListener("click", burstConfetti);
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bindEvents);
+    } else {
+      bindEvents();
     }
   </script>
 </body>
