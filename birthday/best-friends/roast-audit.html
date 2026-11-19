@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Birthday Audit — Interactive Wish</title>
+<style>
+  :root {
+    --bg: #0c0d12;
+    --card: #161822;
+    --card-border: rgba(255, 255, 255, 0.09);
+    --text: #f5f6fa;
+    --muted: #9aa0b4;
+    --accent: #ff5e62;
+    --accent-2: #ff9966;
+    --green: #38d9a9;
+    --radius: 22px;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: radial-gradient(circle at top, #1b1f33 0%, var(--bg) 65%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    overflow-x: hidden;
+  }
+
+  .phone-shell {
+    width: 100%;
+    max-width: 420px;
+    min-height: 88dvh;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 32px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 94, 98, 0.14);
+    border: 1px solid rgba(255, 94, 98, 0.35);
+    color: #ff9a9d;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.35); opacity: 0.55; }
+  }
+
+  .step {
+    display: none;
+    flex-direction: column;
+    gap: 18px;
+    margin: auto 0;
+    animation: fadeUp 0.35s ease;
+  }
+
+  .step.active {
+    display: flex;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .age-pill {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(255, 153, 102, 0.14);
+    color: var(--accent-2);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 800;
+  }
+
+  .subtitle {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .roast-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .roast-item {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-size: 14.5px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+
+  .tribute-box {
+    background: linear-gradient(135deg, rgba(255, 94, 98, 0.14), rgba(255, 153, 102, 0.1));
+    border: 1px solid rgba(255, 153, 102, 0.3);
+    border-radius: 18px;
+    padding: 18px;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .from-line {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+
+  .btn-primary {
+    width: 100%;
+    border: none;
+    border-radius: 16px;
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(255, 94, 98, 0.3);
+    transition: transform 0.15s ease;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  .btn-secondary {
+    width: 100%;
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 8px;
+  }
+
+  .confetti-piece {
+    position: fixed;
+    top: -12px;
+    width: 10px;
+    height: 14px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 999;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(105vh) rotate(540deg);
+      opacity: 0.9;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="phone-shell">
+    <div class="badge"><span class="dot"></span> Official Birthday Audit</div>
+
+    <!-- Step 1: Lean Hook -->
+    <section id="step-1" class="step active">
+      <div class="hero-card">
+        <div id="age-badge" class="age-pill">LEVEL 25 UNLOCKED</div>
+        <h1 id="headline-name">Rohan</h1>
+        <p id="hook-sub" class="subtitle">We ran a quick background check before your birthday post goes live.</p>
+      </div>
+      <button class="btn-primary" onclick="revealWish()">Tap to See the Verdict</button>
+    </section>
+
+    <!-- Step 2: Punchy Roast + Wish Payoff -->
+    <section id="step-2" class="step">
+      <div class="roast-list">
+        <div id="roast-1" class="roast-item">1. "I'm 5 minutes away" — still hasn't put shoes on.</div>
+        <div id="roast-2" class="roast-item">2. Plans trips like a CEO, cancels like a ghost.</div>
+        <div id="roast-3" class="roast-item">3. Somehow still the first call when things go sideways.</div>
+      </div>
+
+      <div class="tribute-box">
+        <div id="tribute-text">Happy birthday, legend. Wouldn't trade the chaos or the loyalty for anything.</div>
+        <div id="sender-line" class="from-line">— From Swapnil</div>
+      </div>
+
+      <button class="btn-secondary" onclick="burstConfetti()">Celebrate Again</button>
+    </section>
+
+    <div class="footer-note">Made for mobile • Instant wish experience</div>
+  </div>
+
+  <script>
+    // Edit these defaults or pass URL query params:
+    // ?name=Priya&age=26&r1=...&r2=...&r3=...&wish=...&from=...
+    const WISH_CONFIG = {
+      name: "Rohan",
+      age: "25",
+      r1: '1. "I'm 5 minutes away" — still hasn't put shoes on.',
+      r2: "2. Plans trips like a CEO, cancels like a ghost.",
+      r3: "3. Somehow still the first call when things go sideways.",
+      wish: "Happy birthday, legend. Wouldn't trade the chaos or the loyalty for anything.",
+      from: "Swapnil"
+    };
+
+    (function applyConfig() {
+      const params = new URLSearchParams(window.location.search);
+      const data = {
+        name: params.get("name") || WISH_CONFIG.name,
+        age: params.get("age") || WISH_CONFIG.age,
+        r1: params.get("r1") || WISH_CONFIG.r1,
+        r2: params.get("r2") || WISH_CONFIG.r2,
+        r3: params.get("r3") || WISH_CONFIG.r3,
+        wish: params.get("wish") || WISH_CONFIG.wish,
+        from: params.get("from") || WISH_CONFIG.from
+      };
+
+      document.getElementById("age-badge").textContent = `LEVEL ${data.age} UNLOCKED`;
+      document.getElementById("headline-name").textContent = data.name;
+      document.getElementById("roast-1").textContent = data.r1;
+      document.getElementById("roast-2").textContent = data.r2;
+      document.getElementById("roast-3").textContent = data.r3;
+      document.getElementById("tribute-text").textContent = data.wish;
+      document.getElementById("sender-line").textContent = `— From ${data.from}`;
+    })();
+
+    function revealWish() {
+      document.getElementById("step-1").classList.remove("active");
+      document.getElementById("step-2").classList.add("active");
+      burstConfetti();
+    }
+
+    function burstConfetti() {
+      const colors = ["#ff5e62", "#ff9966", "#38d9a9", "#ffd43b", "#748ffc"];
+      for (let i = 0; i < 36; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[i % colors.length];
+        piece.style.animationDuration = (1.6 + Math.random() * 1.4) + "s";
+        piece.style.animationDelay = (Math.random() * 0.25) + "s";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 3200);
+      }
+    }
+  </script>
+</body>
+</html>
