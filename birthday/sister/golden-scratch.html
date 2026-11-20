@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Golden Foil Surprise Wish ✨</title>
+<style>
+  :root {
+    --bg: #06101c;
+    --surface: #0c2036;
+    --surface-2: #122c49;
+    --border: rgba(244, 185, 66, 0.38);
+    --text: #fffdf9;
+    --muted: #c2b6d9;
+    --gold-1: #fff3b8;
+    --gold-2: #f4b942;
+    --gold-3: #b87a14;
+    --rose: #38bdf8;
+    --card-bg:
+      radial-gradient(circle at 100% 0%, rgba(244, 185, 66, 0.14) 0%, transparent 45%),
+      radial-gradient(circle at 0% 100%, rgba(56, 189, 248, 0.14) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.018) 0px, rgba(255, 255, 255, 0.018) 1px, transparent 1px, transparent 14px),
+      linear-gradient(155deg, #132f4d 0%, #091829 100%);
+    --card-radius: 26px;
+    --card-padding: 26px 22px;
+    --quote-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Noto Sans Gujarati", Helvetica, Arial, sans-serif;
+    --quote-style: normal;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    width: 100%;
+    background: radial-gradient(circle at 50% 12%, #113254 0%, #06101c 74%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Noto Sans Gujarati", Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    transition: background 0.35s ease;
+  }
+
+  /* Style 1: Royal Sapphire & Gold Crest */
+  body.style-sapphire {
+    --bg: #06101c;
+    --surface: #0c2036;
+    --surface-2: #122c49;
+    --border: rgba(244, 185, 66, 0.38);
+    --gold-1: #fff3b8;
+    --gold-2: #f4b942;
+    --gold-3: #b87a14;
+    --rose: #38bdf8;
+    --card-bg:
+      radial-gradient(circle at 100% 0%, rgba(244, 185, 66, 0.14) 0%, transparent 45%),
+      radial-gradient(circle at 0% 100%, rgba(56, 189, 248, 0.14) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.018) 0px, rgba(255, 255, 255, 0.018) 1px, transparent 1px, transparent 14px),
+      linear-gradient(155deg, #132f4d 0%, #091829 100%);
+    --card-radius: 26px;
+    --card-padding: 26px 22px;
+    --quote-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Noto Sans Gujarati", Helvetica, Arial, sans-serif;
+    --quote-style: normal;
+    background: radial-gradient(circle at 50% 12%, #113254 0%, #06101c 74%);
+  }
+
+  /* Style 2: Warm Vintage Crimson & Gold Trim */
+  body.style-crimson,
+  body.style-parchment {
+    --bg: #170d12;
+    --surface: #291620;
+    --surface-2: #381e2c;
+    --border: rgba(255, 212, 138, 0.45);
+    --gold-1: #ffe8a3;
+    --gold-2: #e5a93c;
+    --gold-3: #9e6312;
+    --rose: #fb7185;
+    --card-bg:
+      radial-gradient(circle at 50% 0%, rgba(255, 212, 138, 0.18) 0%, transparent 55%),
+      linear-gradient(165deg, #2d1823 0%, #1c0f16 100%);
+    --card-radius: 22px;
+    --card-padding: 28px 22px;
+    --quote-font: Georgia, "Times New Roman", "Noto Sans Devanagari", "Noto Sans Gujarati", serif;
+    --quote-style: italic;
+    background: radial-gradient(circle at 50% 14%, #381c2b 0%, #170d12 74%);
+  }
+
+  /* Style 3: Neon Velvet Celebration */
+  body.style-velvet {
+    --bg: #11071a;
+    --surface: #210e33;
+    --surface-2: #2f1447;
+    --border: rgba(255, 110, 168, 0.38);
+    --gold-1: #ffe0f0;
+    --gold-2: #ff5ca8;
+    --gold-3: #b5179e;
+    --rose: #ffb36b;
+    --card-bg:
+      radial-gradient(circle at 85% 15%, rgba(255, 92, 168, 0.22) 0%, transparent 50%),
+      radial-gradient(circle at 15% 85%, rgba(255, 179, 107, 0.16) 0%, transparent 50%),
+      linear-gradient(155deg, #2d1345 0%, #170924 100%);
+    --card-radius: 28px;
+    --card-padding: 26px 22px;
+    --quote-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Noto Sans Gujarati", Helvetica, Arial, sans-serif;
+    --quote-style: normal;
+    background: radial-gradient(circle at 50% 12%, #341352 0%, #11071a 74%);
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .phone-frame {
+    width: 100%;
+    max-width: 410px;
+    min-height: 86dvh;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid var(--border);
+    border-radius: 34px;
+    padding: 20px 18px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65);
+  }
+
+  .top-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    z-index: 5;
+  }
+
+  .step-pills {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .step-pill {
+    width: 24px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    transition: all 0.3s ease;
+  }
+
+  .step-pill.active {
+    width: 38px;
+    background: linear-gradient(90deg, var(--gold-2), var(--rose));
+  }
+
+  .hud-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .icon-only {
+    background: none;
+    border: none;
+    padding: 4px;
+    margin: 0;
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    touch-action: manipulation;
+    opacity: 0.88;
+    transition: transform 0.16s ease, opacity 0.16s ease;
+  }
+
+  .icon-only:active {
+    transform: scale(0.86);
+  }
+
+  .icon-only.muted {
+    opacity: 0.45;
+  }
+
+  .scene {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 18px;
+    margin: auto 0;
+    padding: 8px 0;
+    animation: sceneEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 4;
+  }
+
+  .scene.active {
+    display: flex;
+  }
+
+  @keyframes sceneEnter {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Scene 1: Mystery Surprise Medallion */
+  .mystery-stage {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .orbit-ring {
+    position: absolute;
+    width: 182px;
+    height: 182px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(244, 185, 66, 0.55);
+    animation: spinSlow 11s linear infinite;
+    pointer-events: none;
+  }
+
+  .pulse-aura {
+    position: absolute;
+    width: 152px;
+    height: 152px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(244, 185, 66, 0.28) 0%, transparent 72%);
+    animation: auraBeat 2.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes auraBeat {
+    0%, 100% { transform: scale(0.94); opacity: 0.65; }
+    50% { transform: scale(1.18); opacity: 1; }
+  }
+
+  @keyframes spinSlow {
+    to { transform: rotate(360deg); }
+  }
+
+  .mystery-medallion {
+    width: 144px;
+    height: 144px;
+    border-radius: 50%;
+    background: linear-gradient(140deg, var(--gold-1) 0%, var(--gold-2) 52%, var(--gold-3) 100%);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.48), inset 0 2px 6px rgba(255, 255, 255, 0.68);
+    border: 3px solid rgba(255, 248, 214, 0.88);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #1f1200;
+    padding: 12px;
+    transition: transform 0.24s ease, opacity 0.24s ease;
+    position: relative;
+  }
+
+  .mystery-stage:active .mystery-medallion {
+    transform: scale(0.92);
+  }
+
+  .medallion-burst {
+    transform: scale(1.34) rotate(28deg) !important;
+    opacity: 0 !important;
+  }
+
+  .mystery-glyph {
+    font-size: 40px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+    animation: mysteryWiggle 2.6s ease-in-out infinite;
+  }
+
+  @keyframes mysteryWiggle {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(5deg) scale(1.08); }
+  }
+
+  .mystery-spark {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    margin-top: 6px;
+    opacity: 0.85;
+  }
+
+  /* Scene 2: Golden Foil Scratch Card */
+  .scratch-card-box {
+    position: relative;
+    width: 100%;
+    min-height: 265px;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.58), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s ease;
+  }
+
+  .scratch-card-box::before,
+  .scratch-card-box::after {
+    content: "✦";
+    position: absolute;
+    font-size: 11px;
+    color: var(--gold-2);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .scratch-card-box::before {
+    top: 10px;
+    left: 12px;
+  }
+
+  .scratch-card-box::after {
+    bottom: 10px;
+    right: 12px;
+  }
+
+  .under-reveal {
+    width: 100%;
+    padding: var(--card-padding);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+  }
+
+  .reveal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--gold-2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    padding-bottom: 10px;
+  }
+
+  .revealed-recipient {
+    font-size: 23px;
+    font-weight: 900;
+    line-height: 1.2;
+    color: var(--gold-1);
+    margin: 2px 0 0;
+  }
+
+  .reveal-message {
+    font-size: 16.5px;
+    line-height: 1.62;
+    color: var(--text);
+    margin: 0;
+    font-weight: 500;
+    font-family: var(--quote-font);
+    font-style: var(--quote-style);
+  }
+
+  .reveal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  }
+
+  .reveal-sender {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--gold-1);
+  }
+
+  .next-orb-icon {
+    background: none;
+    border: none;
+    padding: 4px;
+    color: var(--gold-1);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    opacity: 0.25;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  .next-orb-icon.ready {
+    opacity: 1;
+    pointer-events: auto;
+    animation: orbPulse 1.8s infinite ease-in-out;
+  }
+
+  @keyframes orbPulse {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+
+  canvas#foil-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    cursor: grab;
+    transition: opacity 0.45s ease;
+    z-index: 3;
+  }
+
+  canvas#foil-canvas:active {
+    cursor: grabbing;
+  }
+
+  canvas#foil-canvas.cleared {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Scene 3: Interactive Star Finale */
+  .star-finale-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+  }
+
+  .star-orb-trigger {
+    width: 156px;
+    height: 156px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff7cc 0%, var(--gold-2) 55%, var(--gold-3) 100%);
+    box-shadow: 0 0 38px rgba(244, 185, 66, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    cursor: pointer;
+    touch-action: manipulation;
+    animation: floatStar 2.6s ease-in-out infinite;
+    transition: transform 0.16s ease;
+  }
+
+  .star-orb-trigger:active {
+    transform: scale(0.92);
+  }
+
+  @keyframes floatStar {
+    0%, 100% { transform: translateY(0px) rotate(-4deg); }
+    50% { transform: translateY(-9px) rotate(4deg); }
+  }
+
+  .finale-panel {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: 20px;
+  }
+
+  .finale-heading {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gold-1);
+  }
+
+  .finale-copy {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .confetti-piece {
+    position: fixed;
+    top: -12px;
+    width: 9px;
+    height: 13px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 999;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(105vh) rotate(560deg);
+      opacity: 0.92;
+    }
+  }
+</style>
+</head>
+<body class="style-sapphire">
+  <div class="phone-frame">
+    <div class="top-hud">
+      <div class="step-pills">
+        <div id="pill-1" class="step-pill active"></div>
+        <div id="pill-2" class="step-pill"></div>
+        <div id="pill-3" class="step-pill"></div>
+      </div>
+      <div class="hud-actions">
+        <button type="button" id="sound-icon" class="icon-only" aria-label="Toggle sound">🔊</button>
+        <button type="button" id="replay-icon" class="icon-only" aria-label="Replay">↻</button>
+      </div>
+    </div>
+
+    <!-- SCENE 1: Mystery Surprise Medallion (Name hidden until revealed) -->
+    <section id="scene-1" class="scene active">
+      <div id="mystery-trigger" class="mystery-stage" role="button" tabindex="0" aria-label="Mystery surprise">
+        <div class="pulse-aura"></div>
+        <div class="orbit-ring"></div>
+        <div id="mystery-medallion" class="mystery-medallion">
+          <div class="mystery-glyph">🎁</div>
+          <div class="mystery-spark">✦ ✦ ✦</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCENE 2: Golden Foil Scratch Card -->
+    <section id="scene-2" class="scene">
+      <div class="scratch-card-box" id="scratch-box">
+        <div class="under-reveal">
+          <div class="reveal-top">
+            <span id="card-tag">ROYAL PASS</span>
+            <span id="card-edition">SPECIAL KEEPSAKE</span>
+          </div>
+          <div id="revealed-name" class="revealed-recipient">Chhoti</div>
+          <p id="wish-quote" class="reveal-message">
+            May every wish you make this year turn into something even better than you imagined. Happy Birthday!
+          </p>
+          <div class="reveal-footer">
+            <div id="wish-from" class="reveal-sender">— Always with you, Bhai</div>
+            <button type="button" id="to-scene3-btn" class="next-orb-icon" aria-label="Next">✦ →</button>
+          </div>
+        </div>
+        <canvas id="foil-canvas"></canvas>
+      </div>
+    </section>
+
+    <!-- SCENE 3: Interactive Star Finale -->
+    <section id="scene-3" class="scene">
+      <div class="star-finale-stage">
+        <div id="star-trigger" class="star-orb-trigger" role="button" tabindex="0" aria-label="Celebration star">
+          🌟
+        </div>
+        <div class="finale-panel">
+          <h2 id="finale-title" class="finale-heading">Golden Wishes 🌟</h2>
+          <p id="finale-sub" class="finale-copy">Here is to laughter, warmth, and bright new beginnings ahead.</p>
+        </div>
+      </div>
+    </section>
+
+    <div></div>
+  </div>
+
+  <script>
+    // Universal 8-parameter schema + optional `style` query param (`sapphire`, `crimson`, `velvet`)
+    const WISH_CONFIG = {
+      style: "sapphire",
+      name: "Chhoti",
+      tag: "ROYAL PASS",
+      sub: "SPECIAL KEEPSAKE",
+      i1: "Golden Wishes 🌟",
+      i2: "Here is to laughter, warmth, and bright new beginnings ahead.",
+      i3: "",
+      wish: "May every wish you make this year turn into something even better than you imagined. Happy Birthday!",
+      from: "Always with you, Bhai"
+    };
+
+    const STYLE_MAP = {
+      sapphire: {
+        bodyClass: "style-sapphire",
+        foilStops: ["#fff5c2", "#f4b942", "#b87a14", "#7dd3fc"]
+      },
+      crimson: {
+        bodyClass: "style-crimson",
+        foilStops: ["#ffe8a3", "#e5a93c", "#9e6312", "#fda4af"]
+      },
+      parchment: {
+        bodyClass: "style-crimson",
+        foilStops: ["#ffe8a3", "#e5a93c", "#9e6312", "#fda4af"]
+      },
+      velvet: {
+        bodyClass: "style-velvet",
+        foilStops: ["#ffe0f0", "#ff5ca8", "#b5179e", "#ffb36b"]
+      }
+    };
+
+    let activeStyleKey = "sapphire";
+    let soundOn = true;
+    let audioCtx = null;
+    let isScratching = false;
+    let revealTriggered = false;
+
+    function applyUrlConfig() {
+      const params = new URLSearchParams(window.location.search);
+      const rawStyle = (params.get("style") || WISH_CONFIG.style).toLowerCase().trim();
+      activeStyleKey = STYLE_MAP[rawStyle] ? rawStyle : "sapphire";
+      document.body.className = STYLE_MAP[activeStyleKey].bodyClass;
+
+      const name = params.get("name") || WISH_CONFIG.name;
+      const tag  = params.get("tag")  || WISH_CONFIG.tag;
+      const sub  = params.get("sub")  || WISH_CONFIG.sub;
+      const i1   = params.get("i1")   || WISH_CONFIG.i1;
+      const i2   = params.get("i2")   || WISH_CONFIG.i2;
+      const wish = params.get("wish") || WISH_CONFIG.wish;
+      const from = params.get("from") || WISH_CONFIG.from;
+
+      document.getElementById("card-tag").textContent = tag;
+      document.getElementById("card-edition").textContent = sub;
+      document.getElementById("revealed-name").textContent = name;
+      document.getElementById("wish-quote").textContent = wish;
+      document.getElementById("wish-from").textContent = "— " + from;
+      document.getElementById("finale-title").textContent = i1;
+      document.getElementById("finale-sub").textContent = i2;
+    }
+
+    function playChime(kind) {
+      if (!soundOn) return;
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return;
+        if (!audioCtx) audioCtx = new Ctx();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+        const notes = kind === "unlock"
+          ? [523.25, 659.25, 783.99]
+          : [587.33, 739.99, 880.0, 1174.66];
+
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = kind === "unlock" ? "triangle" : "sine";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.14, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.34);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.36);
+        });
+      } catch (e) {}
+    }
+
+    function dropConfetti(count = 38) {
+      const colors = ["#fff0a8", "#f4b942", "#ff5e7e", "#38bdf8", "#63e6be"];
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[i % colors.length];
+        piece.style.animationDuration = (1.5 + Math.random() * 1.4) + "s";
+        piece.style.animationDelay = (Math.random() * 0.25) + "s";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 3200);
+      }
+    }
+
+    function setScene(step) {
+      [1, 2, 3].forEach((n) => {
+        const sec = document.getElementById("scene-" + n);
+        const pill = document.getElementById("pill-" + n);
+        if (sec) sec.classList.toggle("active", n === step);
+        if (pill) pill.classList.toggle("active", n === step);
+      });
+      if (step === 2) {
+        requestAnimationFrame(initFoilCanvas);
+      }
+    }
+
+    function initFoilCanvas() {
+      const canvas = document.getElementById("foil-canvas");
+      const box = document.getElementById("scratch-box");
+      if (!canvas || !box) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const width = box.clientWidth;
+      const height = box.clientHeight;
+      if (!width || !height) return;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.classList.remove("cleared");
+      revealTriggered = false;
+
+      const nextBtn = document.getElementById("to-scene3-btn");
+      if (nextBtn) nextBtn.classList.remove("ready");
+
+      const ctx = canvas.getContext("2d");
+      ctx.save();
+      ctx.scale(dpr, dpr);
+      ctx.globalCompositeOperation = "source-over";
+
+      const stops = (STYLE_MAP[activeStyleKey] || STYLE_MAP.sapphire).foilStops;
+      const grad = ctx.createLinearGradient(0, 0, width, height);
+      grad.addColorStop(0, stops[0]);
+      grad.addColorStop(0.45, stops[1]);
+      grad.addColorStop(0.85, stops[2]);
+      grad.addColorStop(1, stops[3]);
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.26)";
+      ctx.lineWidth = 1.4;
+      for (let i = -height; i < width + height; i += 20) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i + height * 0.65, height);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = "rgba(31, 18, 0, 0.72)";
+      ctx.font = "800 18px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("✦  SCRATCH FOIL  ✦", width / 2, height / 2 - 4);
+      ctx.font = "13px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.fillText("✨", width / 2, height / 2 + 22);
+
+      ctx.restore();
+    }
+
+    function scratchAt(clientX, clientY) {
+      const canvas = document.getElementById("foil-canvas");
+      if (!canvas || revealTriggered) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      const x = (clientX - rect.left) * dpr;
+      const y = (clientY - rect.top) * dpr;
+      const radius = 26 * dpr;
+
+      const ctx = canvas.getContext("2d");
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      checkScratchProgress(canvas);
+    }
+
+    function checkScratchProgress(canvas) {
+      if (revealTriggered) return;
+      const ctx = canvas.getContext("2d");
+      const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let transparentCount = 0;
+      const step = 16;
+      let sampled = 0;
+
+      for (let i = 3; i < pixels.length; i += 4 * step) {
+        sampled++;
+        if (pixels[i] < 128) transparentCount++;
+      }
+
+      if (sampled > 0 && transparentCount / sampled > 0.42) {
+        revealTriggered = true;
+        canvas.classList.add("cleared");
+        const nextBtn = document.getElementById("to-scene3-btn");
+        if (nextBtn) nextBtn.classList.add("ready");
+        playChime("celebrate");
+        dropConfetti(28);
+      }
+    }
+
+    function resetAll() {
+      const med = document.getElementById("mystery-medallion");
+      if (med) med.classList.remove("medallion-burst");
+      revealTriggered = false;
+      setScene(1);
+    }
+
+    function init() {
+      applyUrlConfig();
+
+      document.getElementById("mystery-trigger").addEventListener("click", () => {
+        const med = document.getElementById("mystery-medallion");
+        playChime("unlock");
+        dropConfetti(18);
+        if (med) med.classList.add("medallion-burst");
+        setTimeout(() => {
+          setScene(2);
+        }, 240);
+      });
+
+      const foilCanvas = document.getElementById("foil-canvas");
+      foilCanvas.addEventListener("pointerdown", (e) => {
+        isScratching = true;
+        scratchAt(e.clientX, e.clientY);
+      });
+      window.addEventListener("pointermove", (e) => {
+        if (isScratching) {
+          scratchAt(e.clientX, e.clientY);
+        }
+      });
+      window.addEventListener("pointerup", () => {
+        isScratching = false;
+      });
+
+      document.getElementById("to-scene3-btn").addEventListener("click", () => {
+        setScene(3);
+      });
+
+      document.getElementById("star-trigger").addEventListener("click", () => {
+        playChime("celebrate");
+        dropConfetti(45);
+      });
+
+      document.getElementById("sound-icon").addEventListener("click", () => {
+        soundOn = !soundOn;
+        const btn = document.getElementById("sound-icon");
+        btn.textContent = soundOn ? "🔊" : "🔇";
+        btn.classList.toggle("muted", !soundOn);
+        if (soundOn) playChime("unlock");
+      });
+
+      document.getElementById("replay-icon").addEventListener("click", resetAll);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>
